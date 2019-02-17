@@ -1,42 +1,41 @@
-#include <SD.h>
+/*
+	Remeber to upload the data directory to your board!
+	
+	Serial baud rate in this example is 9600
+*/
 
-#include <SPI.h>
-#include <IPAddress.h>
-#include <IniFile.h>
+#include "FS.h"
 
-// The select pin used for the SD card
-//#define SD_SELECT 4
-#define SD_SELECT 22
-#define ETHERNET_SELECT 10
+#include <SPIFFSIniFile.h>
 
 void printErrorMessage(uint8_t e, bool eol = true)
 {
   switch (e) {
-  case IniFile::errorNoError:
+  case SPIFFSIniFile::errorNoError:
     Serial.print("no error");
     break;
-  case IniFile::errorFileNotFound:
+  case SPIFFSIniFile::errorFileNotFound:
     Serial.print("file not found");
     break;
-  case IniFile::errorFileNotOpen:
+  case SPIFFSIniFile::errorFileNotOpen:
     Serial.print("file not open");
     break;
-  case IniFile::errorBufferTooSmall:
+  case SPIFFSIniFile::errorBufferTooSmall:
     Serial.print("buffer too small");
     break;
-  case IniFile::errorSeekError:
+  case SPIFFSIniFile::errorSeekError:
     Serial.print("seek error");
     break;
-  case IniFile::errorSectionNotFound:
+  case SPIFFSIniFile::errorSectionNotFound:
     Serial.print("section not found");
     break;
-  case IniFile::errorKeyNotFound:
+  case SPIFFSIniFile::errorKeyNotFound:
     Serial.print("key not found");
     break;
-  case IniFile::errorEndOfFile:
+  case SPIFFSIniFile::errorEndOfFile:
     Serial.print("end of file");
     break;
-  case IniFile::errorUnknownError:
+  case SPIFFSIniFile::errorUnknownError:
     Serial.print("unknown error");
     break;
   default:
@@ -49,26 +48,19 @@ void printErrorMessage(uint8_t e, bool eol = true)
 
 void setup()
 {
-  // Configure all of the SPI select pins as outputs and make SPI
-  // devices inactive, otherwise the earlier init routines may fail
-  // for devices which have not yet been configured.
-  pinMode(SD_SELECT, OUTPUT);
-  digitalWrite(SD_SELECT, HIGH); // disable SD card
   
-  pinMode(ETHERNET_SELECT, OUTPUT);
-  digitalWrite(ETHERNET_SELECT, HIGH); // disable Ethernet
-
   const size_t bufferLen = 80;
   char buffer[bufferLen];
 
   const char *filename = "/net.ini";
   Serial.begin(9600);
-  SPI.begin();
-  if (!SD.begin(SD_SELECT))
-    while (1)
-      Serial.println("SD.begin() failed");
   
-  IniFile ini(filename);
+  //Mount the SPIFFS  
+  if (!SPIFFS.begin())
+    while (1)
+      Serial.println("SPIFFS.begin() failed");
+  
+  SPIFFSIniFile ini(filename);
   if (!ini.open()) {
     Serial.print("Ini file ");
     Serial.print(filename);
