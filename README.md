@@ -5,4 +5,4 @@ This is just a modification of this library: [IniFile](https://github.com/stevem
 
 In case of any questions regarding how this library works, please refer to the previous link.
 
-All credits go to Steven Marple. All I did was adapt the source to work on SPIFFS aiming at providing this feature for ESP8266 and ESP32 platforms.
+All credits go to Steve Marple. All I did was adapt the source to work on SPIFFS aiming at providing this feature for ESP8266 and ESP32 platforms.
