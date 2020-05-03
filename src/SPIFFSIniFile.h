@@ -6,6 +6,7 @@
 // Maximum length for filename, excluding NULL char
 #define SPIFFSINI_FILE_MAX_FILENAME_LEN 31
 
+#include "SPIFFS.h"
 #include "FS.h"
 #include "IPAddress.h"
 
