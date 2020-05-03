@@ -29,7 +29,7 @@ public:
 	static const uint8_t maxFilenameLen;
 
 	// Create an SPIFFSIniFile object. It isn't opened until open() is called on it.
-	SPIFFSIniFile(const char* filename, char* mode = "r",
+	SPIFFSIniFile(const char* filename, const char* mode = "r",
 			bool caseSensitive = false);
 	~SPIFFSIniFile();
 
@@ -41,7 +41,7 @@ public:
 	inline error_t getError(void) const;
 	inline void clearError(void) const;
 	// Get the file mode (FILE_READ/FILE_WRITE)
-	inline char* getMode(void) const;
+	inline const char* getMode(void) const;
 
 	// Get the filename asscoiated with the ini file object
 	inline const char* getFilename(void) const;
@@ -118,7 +118,7 @@ protected:
 
 private:
 	char _filename[SPIFFSINI_FILE_MAX_FILENAME_LEN];
-	char* _mode;
+	const char* _mode;
 	mutable error_t _error;
 	mutable File _file;
 	bool _caseSensitive;
@@ -160,7 +160,7 @@ void SPIFFSIniFile::clearError(void) const
 	_error = errorNoError;
 }
 
-char* SPIFFSIniFile::getMode(void) const
+const char* SPIFFSIniFile::getMode(void) const
 {
 	return _mode;
 }

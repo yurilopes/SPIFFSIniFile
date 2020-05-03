@@ -4,7 +4,7 @@
 
 const uint8_t SPIFFSIniFile::maxFilenameLen = SPIFFSINI_FILE_MAX_FILENAME_LEN;
 
-SPIFFSIniFile::SPIFFSIniFile(const char* filename, char* mode,
+SPIFFSIniFile::SPIFFSIniFile(const char* filename, const char* mode,
 				 bool caseSensitive)
 {
 	if (strlen(filename) <= maxFilenameLen)
